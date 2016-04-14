@@ -1,0 +1,34 @@
+## to become root sudo su
+
+##To show only running containers use:
+docker ps
+
+##To show all containers use:
+docker ps -a
+
+##to clean running containers
+docker rm `docker ps -aq`
+
+## to stop container with id
+docker stop id
+
+#to remove docker image
+docker rm -f web1
+
+#to get last created container
+docker ps -l
+
+#One liner to stop / remove all of Docker containers:
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+
+
+
+##to build an image
+docker build -t shubhag/node-mongo-server .
+
+##to run an image
+##p : port , d: background process, mongo image name
+sudo docker run -p 27017:27017 --name mongo -d mongo
+
+

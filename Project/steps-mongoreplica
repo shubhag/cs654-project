@@ -1,0 +1,31 @@
+#first build mongo
+bash replica.sh
+
+#create a hosts file
+add web1 = echo $(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ttnd1) "$h1"
+add web2 = echo $(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ttnd2) "$h2" 
+add web3 =  echo $(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ttnd3) "$h3"
+
+/etc/hosts file
+127.0.0.1 localhost
+172.17.0.2 web1
+172.17.0.3 web2
+172.17.0.4 web3
+# The following lines are desirable for IPv6 capable hosts
+::1 ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+
+add this host file in server code
+
+
+docker run -p 3001:80 -d --name web1 --link ttnd1:ttnd1 node-replica
+docker run -p 3002:80 -d --name web2 --link ttnd1:ttnd1 node-replica
+docker run -p 3003:80 -d --name web3 --link ttnd1:ttnd1 node-replica
+
+docker run -d -p 80:80 custom-nginx
+
+node-replica
