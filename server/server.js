@@ -16,6 +16,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json());
+app.use("/css", express.static(__dirname + '/public/stylesheets'));
+app.use("/js", express.static(__dirname + '/public/javascripts'));
 
 const PORT=8080; 
 
