@@ -9,10 +9,7 @@ events {
 http {
     
     upstream myapp1 {
-        ip_hash;        
-        server 54.193.24.179:3001;
-        server 54.193.24.179:3002;
-        server 54.193.24.179:3003;
+        ip_hash;
     }
 
     server {

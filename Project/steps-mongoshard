@@ -1,0 +1,31 @@
+bash shard.sh
+
+get inside mongo router
+docker exec -it mongos bash
+vim /etc/hosts
+127.0.0.1	localhost
+172.17.0.2	mongo1.ttnd.com
+172.17.0.3	mongo2.ttnd.com
+172.17.0.4	mongo3.ttnd.com
+
+172.17.0.5      mongo4.ttnd.com
+172.17.0.6      mongo5.ttnd.com
+172.17.0.7      mongo6.ttnd.com
+::1	localhost ip6-localhost ip6-loopback
+fe00::0	ip6-localnet
+ff00::0	ip6-mcastprefix
+ff02::1	ip6-allnodes
+ff02::2	ip6-allrouters
+172.17.0.11	6bb6066a04c7
+
+mongo
+sh.addShard("ttnda/mongo1.ttnd.com:27017")
+sh.addShard("ttndb/mongo4.ttnd.com:27017")
+
+#adjust server db.js file
+mongoose.connect('mongodb://172.17.0.11:27017/'+DB_NAME, {mongos: true})
+
+
+docker run -p 3003:80 -d --name weeb3 --link mooongooos:mooongooos node-shard
+#example
+docker run -p 80:80 --name wreeb3 --link mooongooos:mooongooos node-shard
