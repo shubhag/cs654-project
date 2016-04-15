@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Docker Deployer</title>
+
+	<!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script type='text/javascript' src='js/check.js'></script> 
+	<link rel="stylesheet" href="css/normalize.css">
+	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+	<!-- <link rel="stylesheet" href="public/stylesheets/main.css"> -->
+
+</head>
+<body>
+	<!-- <form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+		<input type="file" name="code" class ="fileUpload"><br />
+		<input type="submit" name="submit" value="Submit">
+	</form> -->
+	<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+		<h1>Server Info</h1>
+		<fieldset>
+			<legend><span class="number">1</span>Server info</legend>
+			<label for="name">Server Name:</label>
+			<input type="text" id="name" name="user_name">
+			<!-- <label for="mail">Email:</label>
+			<input type="email" id="mail" name="user_email">
+			<label for="password">Password:</label>
+			<input type="password" id="password" name="user_password"> -->
+			<label>Server Files:</label>
+			<input type="file" name="code" class ="fileUpload"><br />
+			<label>Server Type:</label>
+			<input type="radio" id="simple_server" value="simple_server" name="server_type"><label for="simple_server" class="light">Simple NodeJS Server without MongoDB and Load Balancer</label><br>
+			<input type="radio" id="advanced_server" value="advanced_server" name="server_type"><label for="advanced_server" class="light">Advanced NodeJS Server</label>
+		</fieldset>
+		
+		<!-- <fieldset>
+		  <legend><span class="number">2</span>Your profile</legend>
+		  <label for="bio">Biography:</label>
+		  <textarea id="bio" name="user_bio"></textarea>
+		</fieldset> -->
+		<fieldset>
+			<legend><span class="number">2</span>Advanced Server Options</legend>
+			<!-- label for="job">Server Type:</label>
+			<select id="job" name="user_job">
+				<optgroup label="Web">
+					<option value="frontend_developer">Front-End Developer</option>
+					<option value="php_developor">PHP Developer</option>
+					<option value="python_developer">Python Developer</option>
+					<option value="rails_developer"> Rails Developer</option>
+					<option value="web_designer">Web Designer</option>
+					<option value="WordPress_developer">WordPress Developer</option>
+				</optgroup>
+				<optgroup label="Mobile">
+					<option value="Android_developer">Androild Developer</option>
+					<option value="iOS_developer">iOS Developer</option>
+					<option value="mobile_designer">Mobile Designer</option>
+				</optgroup>
+				<optgroup label="Business">
+					<option value="business_owner">Business Owner</option>
+					<option value="freelancer">Freelancer</option>
+				</optgroup>
+				<optgroup label="Other">
+					<option value="secretary">Secretary</option>
+					<option value="maintenance">Maintenance</option>
+				</optgroup>
+			</select -->
+			
+			<!-- <label>Options:</label> -->
+			<input type="checkbox" id="database" value="mongodb_database" name="advanced_options">
+			<label class="light" for="database">MongoDB</label><br>
+			<input type="checkbox" id="load_balancer" value="load_balancer" name="advanced_options">
+			<label class="light" for="load_balancer">Load Balancer</label><br>
+			<!-- <input type="checkbox" id="business" value="interest_business" name="advanced_options">
+			<label class="light" for="business">Business</label> -->
+		
+		</fieldset>
+		<button type="submit">Sign Up</button>
+	</form>
+	  
+	
+</body>
+</html>
