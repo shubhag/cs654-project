@@ -83,7 +83,7 @@ module.exports = function(passport){
         })
 		res.redirect = "/server";
 	});
-	router.get('/add_servers', isAuthenticated,function(req,res){
+	router.post('/add_servers', isAuthenticated,function(req,res){
 			exec('bash files/addserver.sh',function(err,stdout,stderr){
 	            console.log(stdout);
 	        })
