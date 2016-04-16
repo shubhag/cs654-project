@@ -100,7 +100,7 @@ module.exports = function(passport){
 			if(err){
 				return res.end("Unable to process request");
 			} else{
-				return res.end(instances);
+				return res.render('instances', { user: req.user, instances:instances });
 			}
 		})
 	});
@@ -150,7 +150,8 @@ module.exports = function(passport){
 			                }
 			            }
 			            else if ((arg4 == "shard_mongodb") && (req.body.mongodb == "mongodb")){
-			                    exec('bash files/mongo-shard.sh 6 '+ ip+ ' '+ arg2 + ' ' +addr ,function(err,stdout,stderr){
+			            		var numShards = req.body.number_of_shards
+			                    exec('bash files/mongo-shard.sh 6 '+ ip+ ' '+ arg2 + ' ' +addr + ' '+numShards ,function(err,stdout,stderr){
 			                        console.log(stdout);
 			                    })
 			            }
@@ -178,6 +179,7 @@ module.exports = function(passport){
 						newInstance.ip = ip;
 						newInstance.address = addr; 
 						newInstance.type = type;
+						newInstance.name = arg1
 						newInstance.save(function(err) {
                             if (err){
                                 console.log('Error in user instance');  
@@ -186,13 +188,13 @@ module.exports = function(passport){
                         });
 	        	} 
 	        	else{
-	        		return res.end("All instances are busy right now");
+	        		return ;
 	        	}
 	        })
 	        
-	        
+	        res.redirect('/instances');
 	        // res.end("Server has started");
-	        res.sendFile(__dirname + "/uploaded.html");
+	        // res.sendFile(__dirname + "/uploaded.html");
 	    });
 	});
 

@@ -4,5 +4,6 @@ module.exports = mongoose.model('Instance',{
 	numServer: Number,
 	ip: String,
 	address: String,
-	type: Number
+	type: Number,
+	name: String
 });

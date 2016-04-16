@@ -16,7 +16,7 @@ done
 sed -e "/ip_hash;/a ${ipmap}" ../docker-ssh/config.txt > ../docker-ssh/nginx.conf
 echo $1 > ../docker-ssh/configure.txt
 echo $3 >> ../docker-ssh/configure.txt
-echo $4 >> ../docker-ssh/configure.txt
+echo $5 >> ../docker-ssh/configure.txt
 tar -zcvf ../docker-ssh.tar.gz ../docker-ssh
 
 scp -i ~/Downloads/lucky.pem ../docker-ssh.tar.gz $4:~
