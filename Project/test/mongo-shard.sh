@@ -123,13 +123,13 @@ do
 	echo $id1
 	echo $i
 	a=$(repn $i)'/'$(hostn $id1)':27017'
+	# sh.addShard(\"$a\")
+	docker exec -t mongos mongo --eval "sh.addShard(\"$a\")"
 	echo $a
 done
-docker exec -i mongos mongo <<EOF
-sh.addShard("tt1/mongo1.ttnd.com:27017")
-sh.addShard("tt2/mongo4.ttnd.com:27017")
-sh.status()
-EOF
+docker exec -t mongos mongo --eval "sh.status()"
+# echo "wow"
+
 # docker exec -t mongos mongo --eval "rs.addShard("tt1/mongo1.ttnd.com:27017")"
 # docker exec -t mongos mongo --eval "rs.addShard(\"tt2/mongo4.ttnd.com:27017\")"
 ################-------mongo sharding ends-------------------##################
