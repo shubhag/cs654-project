@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Docker Deployer</title>
+	<!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="stylesheets/style2.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script type='text/javascript' src='javascripts/check.js'></script> 
+	<link rel="stylesheet" href="stylesheets/normalize.css">
+	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+	<div style="text-align: right;margin:5px;"><a href="/signout">Logout</a></div>
+	<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+		<h1>Server Info</h1>
+		<fieldset>
+			<legend><span class="number">1</span>Server info</legend>
+			<label for="name">Server Name:</label>
+			<input type="text" id="server_name" name="server_name" required="">
+			<label>Server Files:</label>
+			<input type="file" name="code" id ="fileUpload"><br />
+			<label for="name">Number Of Servers:</label>
+			<input type="number" id="number_of_servers" name="number_of_servers" required="" value="2" min="1" max="5">
+			<label>Server Type:</label>
+			<input type="radio" id="simple_server" value="simple_server" name="server_type" checked="checked"><label for="simple_server" class="light">Simple NodeJS Server</label><br>
+			<input type="radio" id="advanced_server" value="advanced_server" name="server_type"><label for="advanced_server" class="light">Advanced NodeJS Server with MongoDB and Load Balancer</label>
+		</fieldset>
+		<fieldset id="advanced_options" style="display:none">
+			<legend><span class="number">2</span>Advanced Server Options</legend>
+			<label>Options:</label>
+			<input type="checkbox" id="load_balancer" value="load_balancer" name="load_balancer">
+			<label class="light" for="load_balancer">Load Balancer</label><br>
+			<input type="checkbox" id="mongodb" value="mongodb" name="mongodb">
+			<label class="light" for="mongodb">MongoDB</label><br>
+			<div id="mongodb_check" style="display:none">
+				<label>MongoDB Type:</label>
+				<input type="radio" id="simple_mongodb" value="simple_mongodb" name="mongodb_type" checked="checked"><label for="simple_mongodb" class="light">Simple MongoDB Database</label>
+				<input type="radio" id="shard_mongodb" value="shard_mongodb" name="mongodb_type"><label for="shard_mongodb" class="light">Shard MongoDB Database</label>
+				<input type="radio" id="replica_mongodb" value="replica_mongodb" name="mongodb_type"><label for="replica_mongodb" class="light">Replica MongoDB Database</label>
+			</div>
+			<!-- <input type="checkbox" id="database" value="mongodb_database" name="advanced_options">
+			<label class="light" for="database">MongoDB</label><br> -->
+		
+		</fieldset>
+		<button type="submit">Create server</button>
+	</form>
+	  
+	
+</body>
+</html>
