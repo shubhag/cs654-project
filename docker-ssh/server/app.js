@@ -16,7 +16,7 @@ const PORT=80;
 
 app.get('/', function(req, res){
 	res.writeHead(200, {'Content-Type': 'text/plain'});
-	res.end('Server with Shard Mongo and Load balancer!!!');
+	res.end('Server with Load Balancer !!!');
 	// res.send(JSON.stringify({"name": "Lucky Sahani"}));
 })
 
