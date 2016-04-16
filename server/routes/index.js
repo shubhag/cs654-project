@@ -4,8 +4,8 @@ var path = require('path');
 var util = require("util");
 var exec = require('exec');
 var router = express.Router();
-var Ip = require('./models/ip.js');
-var Instance = require('./models/instance.js');
+var Ip = require('../models/ip.js');
+var Instance = require('../models/instance.js');
 
 var isAuthenticated = function (req, res, next) {
 	// if user is authenticated in the session, call the next() to call the next request handler 
@@ -117,7 +117,7 @@ module.exports = function(passport){
 	        	}
 	        	if(instance){
 	        		var ip = instance.ip;
-	        		var addr = instance.addr;
+	        		var addr = instance.address;
 	        		console.log(ip)
 	        		console.log(addr)
 	        		if ( arg3 == "simple_server"){
@@ -158,8 +158,7 @@ module.exports = function(passport){
 			                })
 			            }
 			        }
-			        req.newData.busy = true;
-					Ip.findOneAndUpdate(instance, req.newData, {upsert:true}, function(err, doc){
+					Ip.findOneAndUpdate({ip:ip}, {busy: true}, {upsert:true}, function(err, doc){
 					    if (err){
 					    	console.log('error in updating database')
 					    } else{
