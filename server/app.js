@@ -18,21 +18,21 @@ var mongoose = require('mongoose');
 // mongoose.connect(dbConfig.url);
 
 require('./config/db.js');
-var Ip = require('./models/ip.js');
-console.log('wondering')
-var nip = new Ip({
-  ip: '52.37.160.33',
-  address: 'ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com',
-  busy: false
-});
-nip.save(function(err) {
-    console.log('Hi')
-    if (err){
-        console.log('Error in Saving ipaddress: '+err);  
-        throw err;  
-    }
-    console.log('Ip address saved');    
-});
+// var Ip = require('./models/ip.js');
+// console.log('wondering')
+// var nip = new Ip({
+//   ip: '52.37.160.33',
+//   address: 'ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com',
+//   busy: false
+// });
+// nip.save(function(err) {
+//     console.log('Hi')
+//     if (err){
+//         console.log('Error in Saving ipaddress: '+err);  
+//         throw err;  
+//     }
+//     console.log('Ip address saved');    
+// });
 
 var app = express();
 
@@ -40,7 +40,7 @@ var app = express();
 // app.use("css", path.join(__dirname + '/public/stylesheets'));
 // app.use("js", path.join(__dirname + '/public/javascripts'));
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 app.use(favicon());
 app.use(logger('dev'));

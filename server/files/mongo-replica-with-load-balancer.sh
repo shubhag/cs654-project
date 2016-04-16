@@ -18,10 +18,10 @@ sed -e "/ip_hash;/a ${ipmap}" ../docker-ssh/config.txt > ../docker-ssh/nginx.con
 echo $2 >> ../docker-ssh/configure.txt
 tar -zcvf ../docker-ssh.tar.gz ../docker-ssh
 
-scp -i ~/Downloads/lucky.pem ../docker-ssh.tar.gz ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com:~
+scp -i ~/Downloads/lucky.pem ../docker-ssh.tar.gz $3:~
 
 ##################################################################################
-ssh -T -i ~/Downloads/lucky.pem ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com << 'ENDSSH'
+ssh -T -i ~/Downloads/lucky.pem $3 << 'ENDSSH'
 sudo su
 # docker stop $(docker ps -a -q)
 docker rm -f $(docker ps -a -q)
