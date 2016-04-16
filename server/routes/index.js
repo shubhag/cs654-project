@@ -139,7 +139,7 @@ module.exports = function(passport){
 			                    })
 			                }
 			                else{
-			                    exec('bash files/mongo-simple.sh' ,function(err,stdout,stderr){
+			                    exec('bash files/mongo-simple.sh '+addr ,function(err,stdout,stderr){
 			                        console.log(stdout);
 			                    })
 			                }
@@ -155,7 +155,7 @@ module.exports = function(passport){
 			                    })
 			            }
 			            else{
-			                exec('bash files/load-balancer.sh 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
+			                exec('bash files/load-balancer.sh ' + ip+ ' '+ addr+ ' '+ arg2 ,function(err,stdout,stderr){
 			                    console.log(stdout);
 			                })
 			            }
