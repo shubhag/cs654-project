@@ -8,20 +8,23 @@ unzip public/uploads/code.zip -d ../docker-ssh/server/
 Counter=3000
 ipmap=""
 match="/ip_hash;/a "
-# ipaddr = $1
-# number_of_servers = $2
-for i in `seq 1 $2`;
+echo 'Hi'
+echo $1
+echo $2
+echo $3
+echo 'why'
+for i in `seq 1 $3`;
 do
 	let "Counter=Counter+1"
 	ipmap=$ipmap' server '$1':'$Counter';'
 done
 sed -e "/ip_hash;/a ${ipmap}" ../docker-ssh/config.txt > ../docker-ssh/nginx.conf
 # echo $1 > ../docker-ssh/configure.txt
-echo $2 > ../docker-ssh/configure.txt
+echo $3 > ../docker-ssh/configure.txt
 tar -zcvf ../docker-ssh.tar.gz ../docker-ssh
-scp -i ~/Downloads/lucky.pem ../docker-ssh.tar.gz ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com:~
+scp -i ~/Downloads/lucky.pem ../docker-ssh.tar.gz $2:~
 rm ../docker-ssh.tar.gz
-ssh -T -i ~/Downloads/lucky.pem ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com << 'ENDSSH'
+ssh -T -i ~/Downloads/lucky.pem $2 << 'ENDSSH'
 
 sudo su
 
@@ -38,7 +41,7 @@ docker build -t user-node .
 
 Counter=3000
 sname="web"
-echo $ty
+echo $num
 for i in `seq 1 $num`;
 do
 	let "Counter=Counter+1"
@@ -55,7 +58,6 @@ mv nginx.conf nginx/nginx.conf
 cd nginx
 docker build -t user-nginx .
 docker run -d -p 80:80 --name ng user-nginx
-
 ENDSSH
 
 echo "Server has started"

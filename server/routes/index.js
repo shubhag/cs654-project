@@ -122,7 +122,7 @@ module.exports = function(passport){
 	        		console.log(addr)
 	        		if ( arg3 == "simple_server"){
 			            console.log("Starting Simple Server")
-			            exec('bash files/simplenodeserver.sh' ,function(err,stdout,stderr){
+			            exec('bash files/simplenodeserver.sh ' + addr ,function(err,stdout,stderr){
 			                console.log(stdout);
 			            })
 			        }
@@ -132,8 +132,10 @@ module.exports = function(passport){
 			            var arg5 = req.body.load_balancer
 			            if ((arg4 == "simple_mongodb") && (req.body.mongodb == "mongodb")){
 			                if (arg5 == "load_balancer"){
-			                    exec('bash files/mongo-simple-with-load-balancer.sh 52.37.160.33 '+ arg2,function(err,stdout,stderr){
+			                	console.log('bash files/mongo-simple-with-load-balancer.sh '+ ip+ ' '+ addr+ ' '+ arg2)
+			                    exec('bash files/mongo-simple-with-load-balancer.sh '+ ip+ ' '+ addr+ ' '+ arg2,function(err,stdout,stderr){
 			                        console.log(stdout);
+
 			                    })
 			                }
 			                else{
