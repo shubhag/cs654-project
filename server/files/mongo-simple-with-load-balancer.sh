@@ -54,7 +54,7 @@ mv nginx.conf nginx/nginx.conf
 
 cd nginx
 docker build -t user-nginx .
-docker run -d -p 80:80 user-nginx
+docker run -d -p 80:80 --name ng user-nginx
 
 ENDSSH
 

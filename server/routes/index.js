@@ -81,6 +81,13 @@ module.exports = function(passport){
         })
 		res.redirect = "/server";
 	});
+	router.get('/add_servers', isAuthenticated,function(req,res){
+			exec('bash files/addserver.sh',function(err,stdout,stderr){
+	            console.log(stdout);
+	        })
+			// res.redirect = "/server";
+			res.end("Added extra servers");
+		});
 
 	router.post('/upload', isAuthenticated,function(req,res){
 	    console.log('Uploading')
@@ -124,32 +131,32 @@ module.exports = function(passport){
 	                }
 	            }
 	            else if ((arg4 == "shard_mongodb") && (req.body.mongodb == "mongodb")){
-	                if (arg5 == "load_balancer"){
-	                    exec('bash files/mongo-shard-with-load-balancer.sh 52.37.160.33 '+ arg2,function(err,stdout,stderr){
-	                        console.log(stdout);
-	                    })
+	                // if (arg5 == "load_balancer"){
+	                    // exec('bash files/mongo-shard-with-load-balancer.sh 52.37.160.33 '+ arg2,function(err,stdout,stderr){
+	                    //     console.log(stdout);
+	                    // })
 	                    // res.end("Node Server with Shard MongoDB and Load Balancer has started");
-	                }
-	                else{
-	                    exec('bash files/mongo-shard.sh 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
+	                // }
+	                // else{
+	                    exec('bash files/mongo-shard.sh 6 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
 	                        console.log(stdout);
 	                    })
 	                    // res.end("Node Server with Shard MongoDB has started");
-	                }
+	                // }
 	            }
 	            else if ((arg4 == "replica_mongodb") && (req.body.mongodb == "mongodb")){
-	                if (arg5 == "load_balancer"){
+	                // if (arg5 == "load_balancer"){
 	                    exec('bash files/mongo-replica-with-load-balancer.sh 52.37.160.33 '+ arg2,function(err,stdout,stderr){
 	                        console.log(stdout,err);
 	                    })
 	                    // res.end("Node Server with Replica MongoDB and Load Balancer has started");
-	                }
-	                else{
-	                    exec('bash files/mongo-replica.sh 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
-	                        console.log(stdout);
-	                    })
+	                // }
+	                // else{
+	                //     exec('bash files/mongo-replica.sh 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
+	                //         console.log(stdout);
+	                //     })
 	                    // res.end("Node Server with Replica MongoDB has started");
-	                }
+	                // }
 	            }
 	            else{
 	                exec('bash files/load-balancer.sh 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
