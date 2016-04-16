@@ -1,4 +1,9 @@
 #!/bin/bash
+
+#1st arg- type
+#2nd arg- ip
+#3rd arg- number of server present 
+
 Counter=3000
 ipmap=""
 match="/ip_hash;/a "
@@ -113,5 +118,5 @@ mv nginx.conf nginx/nginx.conf
 
 cd nginx
 docker build -t user-nginx .
-docker run -d -p 80:80 user-nginx
+docker run -d -p 80:80 --name ng user-nginx
 ENDSSH

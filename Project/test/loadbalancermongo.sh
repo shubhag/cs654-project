@@ -1,4 +1,7 @@
 #!/bin/bash
+#1st arg- type
+#2nd arg- ip
+#3rd arg- number of server present 
 Counter=3000
 ipmap=""
 match="/ip_hash;/a "
@@ -12,10 +15,10 @@ echo $1 > ~/Course/docker-ssh/configure.txt
 echo $3 >> ~/Course/docker-ssh/configure.txt
 tar -zcvf ~/Course/docker-ssh.tar.gz ~/Course/docker-ssh
 
-scp -i ~/Downloads/cse.pem ~/Course/docker-ssh.tar.gz ubuntu@ec2-52-38-241-73.us-west-2.compute.amazonaws.com:~
+scp -i ~/Downloads/cse.pem ~/Course/docker-ssh.tar.gz ubuntu@ec2-52-32-149-178.us-west-2.compute.amazonaws.com:~
 
 ##################################################################################
-ssh -T -i ~/Downloads/cse.pem ubuntu@ec2-52-38-241-73.us-west-2.compute.amazonaws.com "bash -s" $1 << 'ENDSSH'
+ssh -T -i ~/Downloads/cse.pem ubuntu@ec2-52-32-149-178.us-west-2.compute.amazonaws.com "bash -s" $1 << 'ENDSSH'
 sudo su
 rm -rf "home/shubham/Course/docker-ssh/"
 # docker stop $(docker ps -a -q)
@@ -54,5 +57,5 @@ mv nginx.conf nginx/nginx.conf
 
 cd nginx
 docker build -t user-nginx .
-docker run -d -p 80:80 user-nginx
+docker run -d -p 80:80 --name ng user-nginx
 ENDSSH
