@@ -61,17 +61,43 @@ app.post('/upload',function(req,res){
 
         if ( arg3 == "simple_server"){
         	console.log("Starting Simple Server")
-	        exec('bash files/simplenodeserver.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
+	        exec('bash files/nodemongo.sh 1' ,function(err,stdout,stderr){
 				console.log(stdout);
 			})
         	res.end("Simple Server has started");
 		}
 		if ( arg3 == "advanced_server"){
-			var arg4 = req.body.mongodb_type
 			console.log("Starting Advanced Server")
-	        exec('bash files/test.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
-				console.log(stdout);
-			})
+			var arg4 = req.body.mongodb_type
+			var arg5 = req.body.load_balancer
+			// console.log(arg5+"hi")
+			if (arg4 == "simple_mongodb"){
+				if (arg5 == "load_balancer"){
+			        exec('bash files/loadbalancermongo.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
+						console.log(stdout);
+					})
+				}
+				else{
+					exec('bash files/loadbalancermongo.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
+						console.log(stdout);
+					})
+				}
+		    }
+		    else if (arg4 == "shard_mongodb"){
+		        exec('bash files/mongo-shard.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
+					console.log(stdout);
+				})
+		    }
+		    else if (arg4 == "replica_mongodb"){
+		        exec('bash files/mongo-replica.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
+					console.log(stdout);
+				})
+		    }
+		    else{
+		    	exec('bash files/loadbalancernode.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
+					console.log(stdout);
+				})
+		    }
 		}
         res.end("Server has started");
     });

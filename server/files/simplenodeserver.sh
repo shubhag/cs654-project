@@ -1,9 +1,9 @@
 #!/bin/bash
 
-scp -i ~/Downloads/cse.pem ~/Course/docker-ssh/server.zip ubuntu@ec2-52-38-241-73.us-west-2.compute.amazonaws.com:~
-scp -i ~/Downloads/cse.pem ~/Course/docker-ssh/node-docker ubuntu@ec2-52-38-241-73.us-west-2.compute.amazonaws.com:~
+scp -i ~/Downloads/lucky.pem public/uploads/code.zip ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com:~
+scp -i ~/Downloads/lucky.pem ~/Course/docker-ssh/node-docker ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com:~
 
-ssh -T -i ~/Downloads/cse.pem ubuntu@ec2-52-38-241-73.us-west-2.compute.amazonaws.com<< 'ENDSSH'
+ssh -T -i ~/Downloads/lucky.pem ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com<< 'ENDSSH'
 sudo su
 rm -rf server/
 docker stop $(docker ps -a -q)

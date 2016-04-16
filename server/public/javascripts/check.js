@@ -8,9 +8,11 @@ $(document).ready(function(){
 		    alert("Please select a file");
 		    return false; 
 		}
-		if (!(document.getElementById('mongodb').checked) && !(document.getElementById('mongodb').checked)){
-			alert("Please select mongodb or load balancer");
-			return false;
+		if($('#advanced_options').is(':checked')) { 
+			if (!(document.getElementById('mongodb').checked) && !(document.getElementById('mongodb').checked)){
+				alert("Please select mongodb or load balancer");
+				return false;
+			}
 		}
 	});
 	$('input[type="radio"]').click(function() {
