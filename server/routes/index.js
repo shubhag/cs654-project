@@ -146,7 +146,7 @@ module.exports = function(passport){
 			                }
 			            }
 			            else if ((arg4 == "shard_mongodb") && (req.body.mongodb == "mongodb")){
-			                    exec('bash files/mongo-shard.sh 6 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
+			                    exec('bash files/mongo-shard.sh 6 '+ ip+ ' '+ arg2 + ' ' +addr ,function(err,stdout,stderr){
 			                        console.log(stdout);
 			                    })
 			            }

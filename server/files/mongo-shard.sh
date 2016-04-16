@@ -19,10 +19,10 @@ echo $3 >> ../docker-ssh/configure.txt
 echo $4 >> ../docker-ssh/configure.txt
 tar -zcvf ../docker-ssh.tar.gz ../docker-ssh
 
-scp -i ~/Downloads/lucky.pem ../docker-ssh.tar.gz ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com:~
+scp -i ~/Downloads/lucky.pem ../docker-ssh.tar.gz $4:~
 
 ##################################################################################
-ssh -T -i ~/Downloads/lucky.pem ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com << 'ENDSSH'
+ssh -T -i ~/Downloads/lucky.pem $4 << 'ENDSSH'
 sudo su
 # docker stop $(docker ps -a -q)
 docker rm -f $(docker ps -a -q)
