@@ -1,0 +1,9 @@
+FROM shubhag/nodejs
+
+COPY	package.json /src/package.json
+RUN		cd /src; npm install
+
+COPY	. /src
+
+EXPOSE  80
+CMD		["node", "/src/app.js"]
