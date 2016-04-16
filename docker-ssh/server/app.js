@@ -16,7 +16,7 @@ const PORT=80;
 
 app.get('/', function(req, res){
 	res.writeHead(200, {'Content-Type': 'text/plain'});
-	res.end('Nice to meet you !!!');
+	res.end('Server with Replica Mongo and Load Balancer !!!');
 	// res.send(JSON.stringify({"name": "Lucky Sahani"}));
 })
 

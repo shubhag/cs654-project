@@ -29,11 +29,11 @@ app.get('/home', function(req, res){
 
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, './public/uploads');
+	callback(null, './public/uploads');
   },
   filename: function (req, file, callback) {
-    // callback(null, file.fieldname + '-' + Date.now());
-    callback(null, file.fieldname) ;
+	// callback(null, file.fieldname + '-' + Date.now());
+	callback(null, file.fieldname) ;
   }
 });
 
@@ -41,7 +41,7 @@ var uploading = multer({ storage : storage}).single("code")
 
 
 app.get('/',function(req,res){
-    res.sendFile(__dirname + "/views/index.html");
+	res.sendFile(__dirname + "/views/index.html");
 });
 
 app.get('/upload',function(req,res){
@@ -50,57 +50,78 @@ app.get('/upload',function(req,res){
 
 app.post('/upload',function(req,res){
 	console.log('Uploading')
-    uploading(req,res,function(err) {
-        if(err) {
-            return res.end("Error uploading file.");
-        }
-        console.log(req.body)
-        var arg1 = req.body.server_name
-        var arg2 = req.body.number_of_servers
-        var arg3 = req.body.server_type
+	uploading(req,res,function(err) {
+		if(err) {
+			return res.end("Error uploading file.");
+		}
+		console.log(req.body)
+		var arg1 = req.body.server_name
+		var arg2 = req.body.number_of_servers
+		var arg3 = req.body.server_type
 
-        if ( arg3 == "simple_server"){
-        	console.log("Starting Simple Server")
-	        exec('bash files/nodemongo.sh 1' ,function(err,stdout,stderr){
+		if ( arg3 == "simple_server"){
+			console.log("Starting Simple Server")
+			exec('bash files/simplenodeserver.sh' ,function(err,stdout,stderr){
 				console.log(stdout);
 			})
-        	res.end("Simple Server has started");
+			res.end("Simple Server has started");
 		}
 		if ( arg3 == "advanced_server"){
 			console.log("Starting Advanced Server")
 			var arg4 = req.body.mongodb_type
 			var arg5 = req.body.load_balancer
-			// console.log(arg5+"hi")
-			if (arg4 == "simple_mongodb"){
+			// console.log(arg5+" "+arg4)
+			if ((arg4 == "simple_mongodb") && (req.body.mongodb == "mongodb")){
 				if (arg5 == "load_balancer"){
-			        exec('bash files/loadbalancermongo.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
+					exec('bash files/mongo-simple-with-load-balancer.sh 52.37.160.33 '+ arg2,function(err,stdout,stderr){
 						console.log(stdout);
 					})
+					res.end("Node Server with Simple MongoDB and Load Balancer has started");
 				}
 				else{
-					exec('bash files/loadbalancermongo.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
+					exec('bash files/mongo-simple.sh' ,function(err,stdout,stderr){
 						console.log(stdout);
 					})
+					res.end("Node Server with Simple MongoDB has started");
 				}
-		    }
-		    else if (arg4 == "shard_mongodb"){
-		        exec('bash files/mongo-shard.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
+			}
+			else if ((arg4 == "shard_mongodb") && (req.body.mongodb == "mongodb")){
+				if (arg5 == "load_balancer"){
+					exec('bash files/mongo-shard-with-load-balancer.sh 52.37.160.33 '+ arg2,function(err,stdout,stderr){
+						console.log(stdout);
+					})
+					res.end("Node Server with Shard MongoDB and Load Balancer has started");
+				}
+				else{
+					exec('bash files/mongo-shard.sh 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
+						console.log(stdout);
+					})
+					res.end("Node Server with Shard MongoDB has started");
+				}
+			}
+			else if ((arg4 == "replica_mongodb") && (req.body.mongodb == "mongodb")){
+				if (arg5 == "load_balancer"){
+					exec('bash files/mongo-replica-with-load-balancer.sh 52.37.160.33 '+ arg2,function(err,stdout,stderr){
+						console.log(stdout,err);
+					})
+					res.end("Node Server with Replica MongoDB and Load Balancer has started");
+				}
+				else{
+					exec('bash files/mongo-replica.sh 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
+						console.log(stdout);
+					})
+					res.end("Node Server with Replica MongoDB has started");
+				}
+			}
+			else{
+				exec('bash files/load-balancer.sh 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
 					console.log(stdout);
 				})
-		    }
-		    else if (arg4 == "replica_mongodb"){
-		        exec('bash files/mongo-replica.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
-					console.log(stdout);
-				})
-		    }
-		    else{
-		    	exec('bash files/loadbalancernode.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
-					console.log(stdout);
-				})
-		    }
+				res.end("Node Server with Load Balancer has started");
+			}
 		}
-        res.end("Server has started");
-    });
+		res.end("Server has started");
+	});
 });
 
 // app.post('/upload', function(req, res){

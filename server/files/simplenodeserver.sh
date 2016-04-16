@@ -1,16 +1,23 @@
 #!/bin/bash
-
-scp -i ~/Downloads/lucky.pem public/uploads/code.zip ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com:~
-scp -i ~/Downloads/lucky.pem ~/Course/docker-ssh/node-docker ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com:~
-
-ssh -T -i ~/Downloads/lucky.pem ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com<< 'ENDSSH'
+rm -rf ../docker-ssh/server/
+mkdir ../docker-ssh/server/
+mv public/uploads/code public/uploads/code.zip
+unzip public/uploads/code.zip -d ../docker-ssh/server/
+tar -zcvf ../docker-ssh.tar.gz ../docker-ssh
+scp -i ~/Downloads/lucky.pem ../docker-ssh.tar.gz ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com:~
+rm ../docker-ssh.tar.gz
+ssh -T -i ~/Downloads/lucky.pem ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com << 'ENDSSH'
 sudo su
-rm -rf server/
-docker stop $(docker ps -a -q)
-docker rm $(docker ps -a -q)
-unzip server.zip
+# rm -rf "home/shubham/Course/docker-ssh/"
+docker rm -f $(docker ps -a -q)
+tar -xvf docker-ssh.tar.gz
+cd "docker-ssh/"
 mv node-docker server/Dockerfile
 cd server
 docker build -t user-node .
+echo "Running Simple Node Server"
 docker run -p 80:80 -d --name web user-node
+
 ENDSSH
+
+echo "Server has started"
