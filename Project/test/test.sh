@@ -1,7 +1,6 @@
- #!/bin/bash 
-COUNTER=4
-i=1
-until [  $i -gt $COUNTER ]; do
- echo $i $COUNTER
- let i+=1
-done
+ty=3
+if [ $ty = "2" ]; then
+	echo $ty
+elif [ $ty = "3" ]; then
+	echo 'wtf'
+fi
