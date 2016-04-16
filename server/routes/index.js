@@ -75,6 +75,13 @@ module.exports = function(passport){
 	    res.redirect = "/";
 	});
 
+	router.get('/terminate', isAuthenticated,function(req,res){
+		exec('bash files/terminate.sh',function(err,stdout,stderr){
+            console.log(stdout);
+        })
+		res.redirect = "/server";
+	});
+
 	router.post('/upload', isAuthenticated,function(req,res){
 	    console.log('Uploading')
 	    uploading(req,res,function(err) {
@@ -85,6 +92,10 @@ module.exports = function(passport){
 	        var arg1 = req.body.server_name
 	        var arg2 = req.body.number_of_servers
 	        var arg3 = req.body.server_type
+
+	        // exec('ls',function(err,stdout,stderr){
+         //        console.log(stdout);
+         //    })
 
 	        if ( arg3 == "simple_server"){
 	            console.log("Starting Simple Server")
