@@ -12,7 +12,25 @@
 
 </head>
 <body>
-	<div style="text-align: right;margin:5px;"><a href="/signout">Logout</a></div>
+	<div class='row'>
+		<div class="col-sm-4">
+			<div style="text-align: center;margin:10px;">
+			<a href="/add_servers">
+				Add Servers
+			</a>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div style="text-align: center;margin:10px;">
+			<a href="/instances">
+				View Instances
+			</a>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div style="text-align: center;margin:10px;"><a href="/signout">Logout</a></div>
+		</div>
+	</div>
 	<div class="container">
 	<h1>Select a Server Type</h1>
 		<div class='row'>
@@ -39,6 +57,7 @@
 								<input type="number" id="number_of_servers" name="number_of_servers" required="" value="2" min="1" max="5">
 								<input type="hidden" name="server_type" value="advanced_server">
 								<input type="hidden" name="load_balancer" value="load_balancer">
+								<input type="hidden" name="type" value="4">
 							</div>
 						</div>
 
@@ -71,6 +90,7 @@
 								<input type="hidden" name="load_balancer" value="load_balancer">
 								<input type="hidden" name="mongodb_type" value="simple_mongodb">
 								<input type="hidden" name="mongodb" value="mongodb">
+								<input type="hidden" name="type" value="3">
 							</div>
 						</div>
 						
@@ -103,6 +123,7 @@
 								<input type="hidden" name="load_balancer" value="load_balancer">
 								<input type="hidden" name="mongodb_type" value="replica_mongodb">
 								<input type="hidden" name="mongodb" value="mongodb">
+								<input type="hidden" name="type" value="5">
 							</div>
 						</div>
 						
@@ -137,6 +158,7 @@
 								<!-- <input type="hidden" name="load_balancer" value="load_balancer"> -->
 								<!-- <input type="hidden" name="mongodb_type" value="replica_mongodb">
 								<input type="hidden" name="mongodb" value="mongodb"> -->
+								<input type="hidden" name="type" value="1">
 							</div>
 						</div>
 					</div>
@@ -168,6 +190,7 @@
 								<!-- <input type="hidden" name="load_balancer" value="load_balancer"> -->
 								<input type="hidden" name="mongodb_type" value="simple_mongodb">
 								<input type="hidden" name="mongodb" value="mongodb">
+								<input type="hidden" name="type" value="2">
 							</div>
 						</div>
 						
@@ -202,6 +225,7 @@
 								<input type="hidden" name="load_balancer" value="load_balancer">
 								<input type="hidden" name="mongodb_type" value="shard_mongodb">
 								<input type="hidden" name="mongodb" value="mongodb">
+								<input type="hidden" name="type" value="6">
 							</div>
 						</div>
 						
