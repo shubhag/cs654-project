@@ -4,6 +4,8 @@ var path = require('path');
 var util = require("util");
 var exec = require('exec');
 var router = express.Router();
+var Ip = require('./models/ip.js');
+var Instance = require('./models/instance.js');
 
 var isAuthenticated = function (req, res, next) {
 	// if user is authenticated in the session, call the next() to call the next request handler 
@@ -75,7 +77,7 @@ module.exports = function(passport){
 	    res.redirect = "/";
 	});
 
-	router.get('/terminate', isAuthenticated,function(req,res){
+	router.post('/terminate', isAuthenticated,function(req,res){
 		exec('bash files/terminate.sh',function(err,stdout,stderr){
             console.log(stdout);
         })
@@ -89,6 +91,15 @@ module.exports = function(passport){
 			res.end("Added extra servers");
 		});
 
+	router.get('/instances', isAuthenticated, function(req, res){
+		Instance.find({'username': req.user.username}, function(err, instances){
+			if(err){
+				return res.end("Unable to process request");
+			} else{
+				return res.end(instances);
+			}
+		})
+	});
 	router.post('/upload', isAuthenticated,function(req,res){
 	    console.log('Uploading')
 	    uploading(req,res,function(err) {
@@ -100,71 +111,79 @@ module.exports = function(passport){
 	        var arg2 = req.body.number_of_servers
 	        var arg3 = req.body.server_type
 
-	        // exec('ls',function(err,stdout,stderr){
-         //        console.log(stdout);
-         //    })
-
-	        if ( arg3 == "simple_server"){
-	            console.log("Starting Simple Server")
-	            exec('bash files/simplenodeserver.sh' ,function(err,stdout,stderr){
-	                console.log(stdout);
-	            })
-	            // res.end("Simple Server has started");
-	        }
-	        if ( arg3 == "advanced_server"){
-	            console.log("Starting Advanced Server")
-	            var arg4 = req.body.mongodb_type
-	            var arg5 = req.body.load_balancer
-	            // console.log(arg5+" "+arg4)
-	            if ((arg4 == "simple_mongodb") && (req.body.mongodb == "mongodb")){
-	                if (arg5 == "load_balancer"){
-	                    exec('bash files/mongo-simple-with-load-balancer.sh 52.37.160.33 '+ arg2,function(err,stdout,stderr){
-	                        console.log(stdout);
-	                    })
-	                    // res.end("Node Server with Simple MongoDB and Load Balancer has started");
-	                }
-	                else{
-	                    exec('bash files/mongo-simple.sh' ,function(err,stdout,stderr){
-	                        console.log(stdout);
-	                    })
-	                    // res.end("Node Server with Simple MongoDB has started");
-	                }
-	            }
-	            else if ((arg4 == "shard_mongodb") && (req.body.mongodb == "mongodb")){
-	                // if (arg5 == "load_balancer"){
-	                    // exec('bash files/mongo-shard-with-load-balancer.sh 52.37.160.33 '+ arg2,function(err,stdout,stderr){
-	                    //     console.log(stdout);
-	                    // })
-	                    // res.end("Node Server with Shard MongoDB and Load Balancer has started");
-	                // }
-	                // else{
-	                    exec('bash files/mongo-shard.sh 6 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
-	                        console.log(stdout);
-	                    })
-	                    // res.end("Node Server with Shard MongoDB has started");
-	                // }
-	            }
-	            else if ((arg4 == "replica_mongodb") && (req.body.mongodb == "mongodb")){
-	                // if (arg5 == "load_balancer"){
-	                    exec('bash files/mongo-replica-with-load-balancer.sh 52.37.160.33 '+ arg2,function(err,stdout,stderr){
-	                        console.log(stdout,err);
-	                    })
-	                    // res.end("Node Server with Replica MongoDB and Load Balancer has started");
-	                // }
-	                // else{
-	                //     exec('bash files/mongo-replica.sh 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
-	                //         console.log(stdout);
-	                //     })
-	                    // res.end("Node Server with Replica MongoDB has started");
-	                // }
-	            }
-	            else{
-	                exec('bash files/load-balancer.sh 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
-	                    console.log(stdout);
-	                })
-	                // res.end("Node Server with Load Balancer has started");
-	            }
-	        }
+	        Ip.findOne({'busy': false}, function(err, instance){
+	        	if (err){
+	        		return res.end("Error 404");
+	        	}
+	        	if(instance){
+	        		var ip = instance.ip;
+	        		var addr = instance.addr;
+	        		console.log(ip)
+	        		console.log(addr)
+	        		if ( arg3 == "simple_server"){
+			            console.log("Starting Simple Server")
+			            exec('bash files/simplenodeserver.sh' ,function(err,stdout,stderr){
+			                console.log(stdout);
+			            })
+			        }
+			        if ( arg3 == "advanced_server"){
+			            console.log("Starting Advanced Server")
+			            var arg4 = req.body.mongodb_type
+			            var arg5 = req.body.load_balancer
+			            if ((arg4 == "simple_mongodb") && (req.body.mongodb == "mongodb")){
+			                if (arg5 == "load_balancer"){
+			                    exec('bash files/mongo-simple-with-load-balancer.sh 52.37.160.33 '+ arg2,function(err,stdout,stderr){
+			                        console.log(stdout);
+			                    })
+			                }
+			                else{
+			                    exec('bash files/mongo-simple.sh' ,function(err,stdout,stderr){
+			                        console.log(stdout);
+			                    })
+			                }
+			            }
+			            else if ((arg4 == "shard_mongodb") && (req.body.mongodb == "mongodb")){
+			                    exec('bash files/mongo-shard.sh 6 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
+			                        console.log(stdout);
+			                    })
+			            }
+			            else if ((arg4 == "replica_mongodb") && (req.body.mongodb == "mongodb")){
+			                    exec('bash files/mongo-replica-with-load-balancer.sh 52.37.160.33 '+ arg2,function(err,stdout,stderr){
+			                        console.log(stdout,err);
+			                    })
+			            }
+			            else{
+			                exec('bash files/load-balancer.sh 52.37.160.33 '+ arg2 ,function(err,stdout,stderr){
+			                    console.log(stdout);
+			                })
+			            }
+			        }
+			        req.newData.busy = true;
+					Ip.findOneAndUpdate(instance, req.newData, {upsert:true}, function(err, doc){
+					    if (err){
+					    	console.log('error in updating database')
+					    } else{
+					    	console.log('busy updated')
+					    }
+					});
+					var newInstance = new Instance();
+						newInstance.username = req.user.username;
+						newInstance.numServer = arg2;
+						newInstance.ip = ip;
+						newInstance.address = addr; 
+						newInstance.save(function(err) {
+                            if (err){
+                                console.log('Error in user instance');  
+                            }
+                            console.log('User Instance saved');    
+                        });
+	        	} 
+	        	else{
+	        		return res.end("All instances are busy right now");
+	        	}
+	        })
+	        
+	        
 	        // res.end("Server has started");
 	        res.sendFile(__dirname + "/uploaded.html");
 	    });

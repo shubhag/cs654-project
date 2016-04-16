@@ -21,15 +21,18 @@ dbOptions = {
 	}
 };
 var replicaSet = 'ttnd';
+var options = {
+  db: { native_parser: true },
+  server: { poolSize: 5 },
+  replset: { rs_name: replicaSet}
+}
+// mongoose.connect('mongodb://mongo1.ttnd.com:27017/'+DB_NAME, options);
+// mongoose.connect('mongodb://mongos:27017/'+DB_NAME, {mongos: true})
 
 if (process.env.MONGO_PORT) MONGO_URL = 'mongodb://mongo/';
 
 mongoose.connect(MONGO_URL + DB_NAME);
-// mongoose.connect('mongodb://172.17.0.2:27017,172.17.0.3:27017,172.17.0.4:27017/'+DB_NAME+'?replicaSet='+replicaSet)
 
 mongoose.connection.on('error', console.error.bind(console));
-
-
-
 
 module.exports = mongoose.connection;

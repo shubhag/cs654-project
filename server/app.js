@@ -9,6 +9,8 @@ var multer = require('multer');
 var path = require('path');
 var util = require("util");
 var exec = require('exec');
+var mongoose = require('mongoose');
+
 
 // var dbConfig = require('./db');
 // var mongoose = require('mongoose');
@@ -16,7 +18,21 @@ var exec = require('exec');
 // mongoose.connect(dbConfig.url);
 
 require('./config/db.js');
-
+// var Ip = require('./models/ip.js');
+// console.log('wondering')
+// var nip = new Ip({
+//   ip: '52.37.160.33',
+//   address: 'ubuntu@ec2-52-37-160-33.us-west-2.compute.amazonaws.com',
+//   busy: false
+// });
+// nip.save(function(err) {
+//     console.log('Hi')
+//     if (err){
+//         console.log('Error in Saving ipaddress: '+err);  
+//         throw err;  
+//     }
+//     console.log('Ip address saved');    
+// });
 
 var app = express();
 
