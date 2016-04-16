@@ -18,8 +18,8 @@ scp -i ~/Downloads/cse.pem ~/Course/docker-ssh.tar.gz ubuntu@ec2-52-38-241-73.us
 ssh -T -i ~/Downloads/cse.pem ubuntu@ec2-52-38-241-73.us-west-2.compute.amazonaws.com "bash -s" $1 << 'ENDSSH'
 sudo su
 rm -rf "home/shubham/Course/docker-ssh/"
-docker stop $(docker ps -a -q)
-docker rm $(docker ps -a -q)
+# docker stop $(docker ps -a -q)
+docker rm -f $(docker ps -a -q)
 tar -xvf docker-ssh.tar.gz
 cd "home/shubham/Course/docker-ssh/"
 ty=$(sed -n '1p' < configure.txt)
