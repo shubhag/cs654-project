@@ -4,7 +4,7 @@ rm -rf ../docker-ssh/server/
 mkdir ../docker-ssh/server/
 mv public/uploads/code public/uploads/code.zip
 unzip public/uploads/code.zip -d ../docker-ssh/server/
-
+# echo "hi"
 Counter=3000
 ipmap=""
 match="/ip_hash;/a "
