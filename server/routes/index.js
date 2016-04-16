@@ -114,6 +114,7 @@ module.exports = function(passport){
 	        var arg1 = req.body.server_name
 	        var arg2 = req.body.number_of_servers
 	        var arg3 = req.body.server_type
+	        var type = req.body.type
 
 	        Ip.findOne({'busy': false}, function(err, instance){
 	        	if (err){
@@ -154,7 +155,7 @@ module.exports = function(passport){
 			                    })
 			            }
 			            else if ((arg4 == "replica_mongodb") && (req.body.mongodb == "mongodb")){
-			                    exec('bash files/mongo-replica-with-load-balancer.sh 52.37.160.33 '+ arg2,function(err,stdout,stderr){
+			                    exec('bash files/mongo-replica-with-load-balancer.sh '+ ip+ ' '+ arg2 + ' '+addr ,function(err,stdout,stderr){
 			                        console.log(stdout,err);
 			                    })
 			            }
@@ -176,6 +177,7 @@ module.exports = function(passport){
 						newInstance.numServer = arg2;
 						newInstance.ip = ip;
 						newInstance.address = addr; 
+						newInstance.type = type;
 						newInstance.save(function(err) {
                             if (err){
                                 console.log('Error in user instance');  
