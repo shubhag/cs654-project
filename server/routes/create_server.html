@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Docker Deployer</title>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="stylesheets/style3.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script type='text/javascript' src='javascripts/check.js'></script> 
+	<link rel="stylesheet" href="stylesheets/normalize.css">
+	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+	<div style="text-align: right;margin:5px;"><a href="/signout">Logout</a></div>
+	<div class="container">
+	<h1>Select a Server Type</h1>
+		<div class='row'>
+			<div class="col-sm-4">
+				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+					<div class="panel panel-default">
+						<div class="panel-heading clearfix">
+							<i class="icon-calendar"></i>
+							<!-- <h3 class="panel-title">Input Groups</h3> -->
+							<img src="/images/load.png" width="100%" height="200px" />
+						</div>
+						<div class="panel-heading clearfix">
+							Simple Node Server with Load Balancer
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<label for="name">Server Name:</label>
+								<input type="text" id="server_name" name="server_name" required="">
+								<label>Server Files:</label>
+								<input type="file" name="code" id ="fileUpload"><br />
+								<label for="name">Number Of Servers:</label>
+								<input type="number" id="number_of_servers" name="number_of_servers" required="" value="2" min="1" max="5">
+								<input type="hidden" name="server_type" value="advanced_server">
+								<input type="hidden" name="load_balancer" value="load_balancer">
+							</div>
+						</div>
+
+					</div>
+					<button type="submit">Create server</button>
+				</form>
+			</div>
+			<div class="col-sm-4">
+				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+					<div class="panel panel-default">
+						<div class="panel-heading clearfix">
+							<i class="icon-calendar"></i>
+							<!-- <h3 class="panel-title">Input Groups</h3> -->
+							<img src="/images/load-mongo.png" width="100%" height="200px" />
+						</div>
+						<div class="panel-heading clearfix">
+							Simple Node Server with MongoDB and Load Balancer
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<label for="name">Server Name:</label>
+								<input type="text" id="server_name" name="server_name" required="">
+								<label>Server Files:</label>
+								<input type="file" name="code" id ="fileUpload"><br />
+								<label for="name">Number Of Servers:</label>
+								<input type="number" id="number_of_servers" name="number_of_servers" required="" value="2" min="1" max="5">
+								<input type="hidden" name="server_type" value="advanced_server">
+								<input type="hidden" name="load_balancer" value="load_balancer">
+								<input type="hidden" name="mongodb_type" value="simple_mongodb">
+								<input type="hidden" name="mongodb" value="mongodb">
+							</div>
+						</div>
+						
+					</div>
+					<button type="submit">Create server</button>
+				</form>
+			</div>
+			<div class="col-sm-4">
+				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+					<div class="panel panel-default">
+						<div class="panel-heading clearfix">
+							<i class="icon-calendar"></i>
+							<!-- <h3 class="panel-title">Input Groups</h3> -->
+							<img src="/images/replica.png" width="100%" height="200px" />
+						</div>
+						<div class="panel-heading clearfix">
+							Simple Node Server with Replica MongoDB and Load Balancer
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<label for="name">Server Name:</label>
+								<input type="text" id="server_name" name="server_name" required="">
+								<label>Server Files:</label>
+								<input type="file" name="code" id ="fileUpload"><br />
+								<label for="name">Number Of Servers:</label>
+								<input type="number" id="number_of_servers" name="number_of_servers" required="" value="2" min="1" max="5">
+								<input type="hidden" name="server_type" value="advanced_server">
+								<input type="hidden" name="load_balancer" value="load_balancer">
+								<input type="hidden" name="mongodb_type" value="replica_mongodb">
+								<input type="hidden" name="mongodb" value="mongodb">
+							</div>
+						</div>
+						
+					</div>
+					<button type="submit">Create server</button>
+				</form>
+			</div>
+		</div>	
+		<div class='row'>
+			<div class="col-sm-4">
+				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+					<div class="panel panel-default">
+						<div class="panel-heading clearfix">
+							<i class="icon-calendar"></i>
+							<!-- <h3 class="panel-title">Input Groups</h3> -->
+							<img src="/images/server.png" width="100%" height="200px" />
+						</div>
+						<div class="panel-heading clearfix">
+							Simple Node Server
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<label for="name">Server Name:</label>
+								<input type="text" id="server_name" name="server_name" required="">
+								<label>Server Files:</label>
+								<input type="file" name="code" id ="fileUpload"><br />
+								<label for="name">Number Of Servers:</label>
+								<input type="number" id="number_of_servers" name="number_of_servers" required="" value="2" min="1" max="5">
+								<input type="hidden" name="server_type" value="simple_server">
+								<!-- <input type="hidden" name="load_balancer" value="load_balancer"> -->
+								<!-- <input type="hidden" name="mongodb_type" value="replica_mongodb">
+								<input type="hidden" name="mongodb" value="mongodb"> -->
+							</div>
+						</div>
+					</div>
+					<button type="submit">Create server</button>
+				</form>
+			</div>
+			<div class="col-sm-4">
+				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+					<div class="panel panel-default">
+						<div class="panel-heading clearfix">
+							<i class="icon-calendar"></i>
+							<!-- <h3 class="panel-title">Input Groups</h3> -->
+							<img src="/images/serverdb.png" width="100%" height="200px" />
+						</div>
+						<div class="panel-heading clearfix">
+							Simple Node Server with MongoDB
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<label for="name">Server Name:</label>
+								<input type="text" id="server_name" name="server_name" required="">
+								<label>Server Files:</label>
+								<input type="file" name="code" id ="fileUpload"><br />
+								<label for="name">Number Of Servers:</label>
+								<input type="number" id="number_of_servers" name="number_of_servers" required="" value="2" min="1" max="5">
+								<input type="hidden" name="server_type" value="advanced_server">
+								<!-- <input type="hidden" name="load_balancer" value="load_balancer"> -->
+								<input type="hidden" name="mongodb_type" value="simple_mongodb">
+								<input type="hidden" name="mongodb" value="mongodb">
+							</div>
+						</div>
+						
+					</div>
+					<button type="submit">Create server</button>
+				</form>
+			</div>
+			<div class="col-sm-4">
+				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+					<div class="panel panel-default">
+						<div class="panel-heading clearfix">
+							<i class="icon-calendar"></i>
+							<!-- <h3 class="panel-title">Input Groups</h3> -->
+							<img src="/images/shard.png" width="100%" height="200px" />
+						</div>
+						<div class="panel-heading clearfix">
+							Simple Node Server with Shard MongoDB and Load Balancer
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<label for="name">Server Name:</label>
+								<input type="text" id="server_name" name="server_name" required="">
+								<label>Server Files:</label>
+								<input type="file" name="code" id ="fileUpload"><br />
+								<label for="name">Number Of Servers:</label>
+								<input type="number" id="number_of_servers" name="number_of_servers" required="" value="2" min="1" max="5">
+								<input type="hidden" name="server_type" value="advanced_server">
+								<input type="hidden" name="load_balancer" value="load_balancer">
+								<input type="hidden" name="mongodb_type" value="shard_mongodb">
+								<input type="hidden" name="mongodb" value="mongodb">
+							</div>
+						</div>
+						
+					</div>
+					<button type="submit">Create server</button>
+				</form>
+			</div>
+			</div>
+
+		</form>
+	</div>
+</body>
+</html>

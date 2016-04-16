@@ -70,7 +70,7 @@ module.exports = function(passport){
 
 
 	router.get('/server', isAuthenticated,function(req,res){
-	    res.sendFile(__dirname + "/index.html");
+	    res.sendFile(__dirname + "/create_server.html");
 	});
 
 	router.get('/upload', isAuthenticated,function(req,res){
