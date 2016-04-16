@@ -8,6 +8,7 @@ var fs = require('fs');
 var bodyParser = require('body-parser');
 var path = require('path');
 var util = require("util");
+var exec = require('exec');
 
 var app = express();
 
@@ -40,16 +41,39 @@ var uploading = multer({ storage : storage}).single("code")
 
 
 app.get('/',function(req,res){
-      res.sendFile(__dirname + "/views/index.html");
+    res.sendFile(__dirname + "/views/index.html");
+});
+
+app.get('/upload',function(req,res){
+	res.redirect = "/";
 });
 
 app.post('/upload',function(req,res){
-	console.log('hi')
+	console.log('Uploading')
     uploading(req,res,function(err) {
         if(err) {
             return res.end("Error uploading file.");
         }
-        res.end("File is uploaded");
+        console.log(req.body)
+        var arg1 = req.body.server_name
+        var arg2 = req.body.number_of_servers
+        var arg3 = req.body.server_type
+
+        if ( arg3 == "simple_server"){
+        	console.log("Starting Simple Server")
+	        exec('bash files/simplenodeserver.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
+				console.log(stdout);
+			})
+        	res.end("Simple Server has started");
+		}
+		if ( arg3 == "advanced_server"){
+			var arg4 = req.body.mongodb_type
+			console.log("Starting Advanced Server")
+	        exec('bash files/test.sh ' + arg1+" "+arg2+" "+arg3 ,function(err,stdout,stderr){
+				console.log(stdout);
+			})
+		}
+        res.end("Server has started");
     });
 });
 
