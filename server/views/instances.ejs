@@ -40,8 +40,8 @@
 	<h1>Running Instances</h1>
 	<% for(var i=0; i< instances.length; i++) { %>
 		<fieldset>
-			<form method="post" action="/add_servers" name="instance_form" enctype="multipart/form-data">
-			<legend><span class="number">1</span>Server 1</legend>
+			<form  action="/add_servers" method="POST">
+			<legend><span class="number">1</span>Server <%= i%></legend>
 			<label for="name">Server Name:</label>
 			<input type="text" id="server_name" name="server_name" value="<%= instances[i].name %>" readonly>
 			<label for="name">Server IP:</label>
@@ -55,9 +55,11 @@
 				<% } %>
 			<% } %>
 			</form>
-			<form method="post" action="/terminate" name="instance_form" enctype="multipart/form-data">
-				<input type="hidden" name="server_ip" value="<%= instances[i].ip%>" readonly>
+			<form action="/terminate" method="POST" >
+				<input type="hidden" name="serv_ip" value="<%= instances[i].ip%>" readonly>
+				<input type="hidden" name="address" value="<%= instances[i].address%>" readonly>
 				<button type="submit" style="background-color: #F33B3B;border: 1px solid #F33B3B;">Terminate Instance</button>
+			</form>
 		</fieldset>
 	<% } %>
 </body>
