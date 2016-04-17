@@ -77,16 +77,9 @@ module.exports = function(passport){
 	    res.sendFile(__dirname + "/instances.html");
 	});
 
-	router.get('/upload', isAuthenticated,function(req,res){
-	    res.redirect = "/";
-	});
-
 	router.post('/terminate', isAuthenticated,function(req,res){
 		var ip = req.body.serv_ip
 		var addr = req.body.address
-		exec('bash files/terminate.sh ' + addr,function(err,stdout,stderr){
-            console.log(stdout);
-        })
         Ip.findOneAndUpdate({ip:ip}, {busy: false}, {upsert:true}, function(err, doc){
 		    if (err){
 		    	res.end('error in updating ip database')
@@ -99,19 +92,32 @@ module.exports = function(passport){
 		        res.end('error in updating instance database')
 		    }
 		    else {
-		       	// console.log('instance removed from user')
-				res.sendFile(__dirname + "/create_server.html");
+		       	console.log('instance removed from user')
+				// res.sendFile(__dirname + "/create_server.html");
 		    }
 		});
-		res.sendFile(__dirname + "/create_server.html");
+		exec('bash files/terminate.sh ' + addr,function(err,stdout,stderr){
+            console.log(stdout);
+			res.sendFile(__dirname + "/create_server.html");
+        })
 	});
 	router.post('/add_servers', isAuthenticated,function(req,res){
-			console.log(req.body)
-			// exec('bash files/addserver.sh',function(err,stdout,stderr){
-	  //           console.log(stdout);
-	  //       })
-			// // res.redirect = "/server";
-			res.end("Added extra servers");
+			var ip = req.body.server_ip
+			var numServer = req.body.num_server
+			var addserver = req.body.add_server
+			var type = req.body.type
+			var address = req.body.address
+			exec('bash files/addserver.sh '+type+ ' '+ip+ ' '+ numServer + ' '+addserver + ' ' + address ,function(err,stdout,stderr){
+	            console.log(stdout);
+				res.redirect("/instances")
+	        })
+	        Instance.findOneAndUpdate({ip:ip}, {numServer:parseInt(numServer)+parseInt(addserver)}, {upsert:true}, function(err, doc){
+			    if (err){
+			    	console.log('error in updating database')
+			    } else{
+			    	console.log('busy updated')
+			    }
+			});
 		});
 
 	router.get('/instances', isAuthenticated, function(req, res){
@@ -129,7 +135,7 @@ module.exports = function(passport){
 	        if(err) {
 	            return res.end("Error uploading file.");
 	        }
-	        console.log(req.body)
+	        // console.log(req.body)
 	        var arg1 = req.body.server_name
 	        var arg2 = req.body.number_of_servers
 	        var arg3 = req.body.server_type
@@ -148,6 +154,7 @@ module.exports = function(passport){
 			            console.log("Starting Simple Server")
 			            exec('bash files/simplenodeserver.sh ' + addr ,function(err,stdout,stderr){
 			                console.log(stdout);
+			                res.redirect('/instances');
 			            })
 			        }
 			        if ( arg3 == "advanced_server"){
@@ -159,12 +166,13 @@ module.exports = function(passport){
 			                	console.log('bash files/mongo-simple-with-load-balancer.sh '+ ip+ ' '+ addr+ ' '+ arg2)
 			                    exec('bash files/mongo-simple-with-load-balancer.sh '+ ip+ ' '+ addr+ ' '+ arg2,function(err,stdout,stderr){
 			                        console.log(stdout);
-
+			                        res.redirect('/instances');
 			                    })
 			                }
 			                else{
 			                    exec('bash files/mongo-simple.sh '+addr ,function(err,stdout,stderr){
 			                        console.log(stdout);
+			                        res.redirect('/instances');
 			                    })
 			                }
 			            }
@@ -172,16 +180,19 @@ module.exports = function(passport){
 			            		var numShards = req.body.number_of_shards
 			                    exec('bash files/mongo-shard.sh 6 '+ ip+ ' '+ arg2 + ' ' +addr + ' '+numShards ,function(err,stdout,stderr){
 			                        console.log(stdout);
+			                        res.redirect('/instances');
 			                    })
 			            }
 			            else if ((arg4 == "replica_mongodb") && (req.body.mongodb == "mongodb")){
 			                    exec('bash files/mongo-replica-with-load-balancer.sh '+ ip+ ' '+ arg2 + ' '+addr ,function(err,stdout,stderr){
 			                        console.log(stdout,err);
+			                        res.redirect('/instances');
 			                    })
 			            }
 			            else{
 			                exec('bash files/load-balancer.sh ' + ip+ ' '+ addr+ ' '+ arg2 ,function(err,stdout,stderr){
 			                    console.log(stdout);
+			                    res.redirect('/instances');
 			                })
 			            }
 			        }
@@ -207,11 +218,11 @@ module.exports = function(passport){
                         });
 	        	} 
 	        	else{
-	        		return ;
+	        		return res.end('Error 404');
 	        	}
 	        })
 	        
-	        res.redirect('/instances');
+	        
 	        // res.end("Server has started");
 	        // res.sendFile(__dirname + "/uploaded.html");
 	    });

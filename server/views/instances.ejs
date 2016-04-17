@@ -3,8 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Docker Deployer</title>
-	<!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="stylesheets/style2.css">
+	<link rel="stylesheet" href="stylesheets/loader.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<!-- <script type='text/javascript' src='javascripts/check2.js'></script>  -->
 	<link rel="stylesheet" href="stylesheets/normalize.css">
@@ -12,17 +13,45 @@
 
 </head>
 <body>
+		<nav class="navbar navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-3">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Docker Deployer</a>
+			</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="navbar-collapse-3">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="/server">Add Servers</a></li>
+					<li><a href="#">View Instances</a></li>
+					<li><a href="#"></a></li>
+					<li>
+					<a class="btn btn-default btn-outline btn-circle collapsed"  data-toggle="collapse" href="#nav-collapse3" aria-expanded="false" aria-controls="nav-collapse3">Logout</a>
+					</li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container -->
+	</nav><!-- /.navbar -->
 	<h1>Running Instances</h1>
 	<% for(var i=0; i< instances.length; i++) { %>
 		<fieldset>
-			<form  action="/add_servers" method="POST">
+			<form  action="/add_servers" method="POST" onsubmit="loading()">
 			<legend><span class="number">1</span>Server <%= i%></legend>
 			<label for="name">Server Name:</label>
 			<input type="text" id="server_name" name="server_name" value="<%= instances[i].name %>" readonly>
 			<label for="name">Server IP:</label>
 			<input type="text" id="server_ip" name="server_ip" value="<%= instances[i].ip%>" readonly>
+			<input type="hidden" name="type" value="<%= instances[i].type%>" >
+			<input type="hidden" name="address" value="<%= instances[i].address%>" readonly>
 			<%if (instances[i].type != 1)  { %>
 				<%if (instances[i].type != 2)  { %>
+					<label for="name">Number of servers:</label>
 					<input type="text" id="num_server" name="num_server" value="<%= instances[i].numServer%>" readonly>
 					<label for="name">Add more server now ??</label>
 					<input type="number" id="add_server" name="add_server" required="" value="1" min="1" max="2">
@@ -30,12 +59,17 @@
 				<% } %>
 			<% } %>
 			</form>
-			<form action="/terminate" method="POST" >
+			<form action="/terminate" method="POST" onsubmit="loading()">
 				<input type="hidden" name="serv_ip" value="<%= instances[i].ip%>" readonly>
 				<input type="hidden" name="address" value="<%= instances[i].address%>" readonly>
 				<button type="submit" style="background-color: #F33B3B;border: 1px solid #F33B3B;">Terminate Instance</button>
 			</form>
 		</fieldset>
 	<% } %>
+<script type="text/javascript">
+	function loading() {
+		$( "html" ).addClass( "loading" );
+	}
+</script>
 </body>
 </html>

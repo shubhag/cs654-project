@@ -13,16 +13,16 @@ do
 	let "Counter=Counter+1"
 	ipmap=$ipmap' server '$2':'$Counter';'
 done
-sed -e "/ip_hash;/a ${ipmap}" config.txt > ~/Course/docker-ssh/nginx.conf
-echo $3 > ~/Course/docker-ssh/configure.txt
-echo $4 >> ~/Course/docker-ssh/configure.txt
-echo $1 >> ~/Course/docker-ssh/configure.txt
+sed -e "/ip_hash;/a ${ipmap}" ../docker-ssh/config.txt > ../docker-ssh/nginx.conf
+echo $3 > ../docker-ssh/configure.txt
+echo $4 >> ../docker-ssh/configure.txt
+echo $1 >> ../docker-ssh/configure.txt
 
-scp -i ~/Downloads/cse.pem ~/Course/docker-ssh/configure.txt ubuntu@ec2-52-32-149-178.us-west-2.compute.amazonaws.com:~
-scp -i ~/Downloads/cse.pem ~/Course/docker-ssh/nginx.conf ubuntu@ec2-52-32-149-178.us-west-2.compute.amazonaws.com:~
+scp -i ~/Downloads/lucky.pem ../docker-ssh/configure.txt $5:~
+scp -i ~/Downloads/lucky.pem ../docker-ssh/nginx.conf $5:~
 
 ##################################################################################
-ssh -T -i ~/Downloads/cse.pem ubuntu@ec2-52-32-149-178.us-west-2.compute.amazonaws.com "bash -s" $1 << 'ENDSSH'
+ssh -T -i ~/Downloads/lucky.pem $5 << 'ENDSSH'
 sudo su
 
 nini=$(sed -n '1p' < configure.txt)
@@ -38,9 +38,9 @@ for i in `seq $nstart $nserver`;
 do
 	let "Counter=Counter+1"
 	sn="$sname$i"
-	if [ $ty = "2" ]; then
+	if [ $ty = "3" ]; then
 		docker run -p $Counter:80 -d --name $sn user-node
-	elif [ $ty = "3" ]; then
+	elif [ $ty = "4" ]; then
 		docker run -p $Counter:80 -d --name $sn --link mongo:mongo user-node
 	elif [ $ty = "5" ]; then
 		docker run -p $Counter:80 -d --name $sn --link ttnd1:ttnd1 user-node
@@ -51,8 +51,8 @@ done
 
 mv nginx.conf home/shubham/Course/docker-ssh/nginx/nginx.conf
 
-docker stop ng
-docker rm ng
+docker stop -f ng
+docker rm -f ng
 cd home/shubham/Course/docker-ssh/nginx
 docker build -t user-nginx .
 docker run -d -p 80:80 --name ng user-nginx

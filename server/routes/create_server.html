@@ -4,7 +4,9 @@
 	<meta charset="UTF-8">
 	<title>Docker Deployer</title>
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="stylesheets/style3.css">
+	<link rel="stylesheet" href="stylesheets/loader.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script type='text/javascript' src='javascripts/check2.js'></script> 
 	<link rel="stylesheet" href="stylesheets/normalize.css">
@@ -12,6 +14,7 @@
 
 </head>
 <body>
+	<div class="se-pre-con"></div>
 	<nav class="navbar navbar-inverse">
 		<div class="container">
 			<div class="navbar-header">
@@ -27,21 +30,13 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="navbar-collapse-3">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/add_servers">Add Servers</a></li>
+					<li><a href="/server">Add Servers</a></li>
 					<li><a href="/instances">View Instances</a></li>
 					<li><a href="#"></a></li>
 					<li>
 					<a class="btn btn-default btn-outline btn-circle collapsed"  data-toggle="collapse" href="#nav-collapse3" aria-expanded="false" aria-controls="nav-collapse3">Logout</a>
 					</li>
 				</ul>
-				<!-- <div class="collapse nav navbar-nav nav-collapse slide-down" id="nav-collapse3">
-					<form class="navbar-form navbar-right" role="search">
-						<div class="form-group">
-						<input type="text" class="form-control" placeholder="Search" />
-						</div>
-						<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-					</form>
-				</div> -->
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container -->
 	</nav><!-- /.navbar -->
@@ -50,7 +45,7 @@
 	<h1>Select a Server Type</h1>
 		<div class='row'>
 			<div class="col-sm-4">
-				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data" onsubmit="loading()" >
 					<div class="panel panel-default">
 						<div class="panel-heading clearfix">
 							<i class="icon-calendar"></i>
@@ -81,7 +76,7 @@
 				</form>
 			</div>
 			<div class="col-sm-4">
-				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data" onsubmit="loading()">
 					<div class="panel panel-default">
 						<div class="panel-heading clearfix">
 							<i class="icon-calendar"></i>
@@ -114,7 +109,7 @@
 				</form>
 			</div>
 			<div class="col-sm-4">
-				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data" onsubmit="loading()">
 					<div class="panel panel-default">
 						<div class="panel-heading clearfix">
 							<i class="icon-calendar"></i>
@@ -149,7 +144,7 @@
 		</div>	
 		<div class='row'>
 			<div class="col-sm-4">
-				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data" onsubmit="loading()">
 					<div class="panel panel-default">
 						<div class="panel-heading clearfix">
 							<i class="icon-calendar"></i>
@@ -181,7 +176,7 @@
 				</form>
 			</div>
 			<div class="col-sm-4">
-				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data" onsubmit="loading()">
 					<div class="panel panel-default">
 						<div class="panel-heading clearfix">
 							<i class="icon-calendar"></i>
@@ -214,7 +209,7 @@
 				</form>
 			</div>
 			<div class="col-sm-4">
-				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data">
+				<form method="post" action="/upload" name="docker_details_form" enctype="multipart/form-data" onsubmit="loading()">
 					<div class="panel panel-default">
 						<div class="panel-heading clearfix">
 							<i class="icon-calendar"></i>
@@ -252,5 +247,10 @@
 
 		</form>
 	</div>
+	<script type="text/javascript">
+	function loading() {
+		$( "html" ).addClass( "loading" );
+	}
+</script>
 </body>
 </html>

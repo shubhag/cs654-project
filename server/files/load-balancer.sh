@@ -27,7 +27,7 @@ ssh -T -i ~/Downloads/lucky.pem $2 << 'ENDSSH'
 sudo su
 
 docker stop $(docker ps -a -q)
-docker rm $(docker ps -a -q)
+docker rm -f $(docker ps -a -q)
 tar -xvf docker-ssh.tar.gz
 cd "docker-ssh/"
 
