@@ -82,16 +82,35 @@ module.exports = function(passport){
 	});
 
 	router.post('/terminate', isAuthenticated,function(req,res){
-		exec('bash files/terminate.sh',function(err,stdout,stderr){
+		var ip = req.body.serv_ip
+		var addr = req.body.address
+		exec('bash files/terminate.sh ' + addr,function(err,stdout,stderr){
             console.log(stdout);
         })
-		res.redirect = "/server";
+        Ip.findOneAndUpdate({ip:ip}, {busy: false}, {upsert:true}, function(err, doc){
+		    if (err){
+		    	res.end('error in updating ip database')
+		    } else{
+		    	console.log('busy updated')
+		    }
+		});
+		Instance.remove({ username: req.user.username, ip:ip }, function(err) {
+		    if (err) {
+		        res.end('error in updating instance database')
+		    }
+		    else {
+		       	// console.log('instance removed from user')
+				res.sendFile(__dirname + "/create_server.html");
+		    }
+		});
+		res.sendFile(__dirname + "/create_server.html");
 	});
 	router.post('/add_servers', isAuthenticated,function(req,res){
-			exec('bash files/addserver.sh',function(err,stdout,stderr){
-	            console.log(stdout);
-	        })
-			// res.redirect = "/server";
+			console.log(req.body)
+			// exec('bash files/addserver.sh',function(err,stdout,stderr){
+	  //           console.log(stdout);
+	  //       })
+			// // res.redirect = "/server";
 			res.end("Added extra servers");
 		});
 
