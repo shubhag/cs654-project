@@ -73,9 +73,9 @@ module.exports = function(passport){
 	    res.sendFile(__dirname + "/create_server.html");
 	});
 
-	router.get('/temp', isAuthenticated,function(req,res){
-	    res.sendFile(__dirname + "/instances.html");
-	});
+	// router.get('/temp', isAuthenticated,function(req,res){
+	//     res.sendFile(__dirname + "/instances.html");
+	// });
 
 	router.get('/upload', isAuthenticated,function(req,res){
 	    res.redirect = "/";
