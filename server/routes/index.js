@@ -73,9 +73,9 @@ module.exports = function(passport){
 	    res.sendFile(__dirname + "/create_server.html");
 	});
 
-	router.get('/temp', isAuthenticated,function(req,res){
-	    res.sendFile(__dirname + "/instances.html");
-	});
+	// router.get('/temp', isAuthenticated,function(req,res){
+	//     res.sendFile(__dirname + "/instances.html");
+	// });
 
 	router.post('/terminate', isAuthenticated,function(req,res){
 		var ip = req.body.serv_ip
@@ -218,7 +218,7 @@ module.exports = function(passport){
                         });
 	        	} 
 	        	else{
-	        		return res.end('Error 404');
+	        		return res.end('All servers are busy');
 	        	}
 	        })
 	        
