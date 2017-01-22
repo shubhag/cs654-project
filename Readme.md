@@ -1,1 +1,1 @@
-http://stackoverflow.com/questions/27187591/deploy-mongodb-replicaset-servers-with-docker-on-different-physical-servers
+Main aim of the project is to dockerize website and create multiple instances of website hosted on aws using a single click.
